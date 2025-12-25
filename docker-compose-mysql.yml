@@ -1,0 +1,75 @@
+
+
+services:
+  # 租户 A
+  mysql-a:
+    image: mysql:8.0
+    container_name: mysql-tenant-a
+    restart: no
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: tenant_a
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_tenant_a_data:/var/lib/mysql  
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - multi-tenant-net
+
+  # 租户 B
+  mysql-b:
+    image: mysql:8.0
+    container_name: mysql-tenant-b
+    restart: no
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: tenant_b
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_tenant_b_data:/var/lib/mysql 
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - multi-tenant-net
+
+  # 个人测试库
+  mysql-test:
+    image: mysql:8.0
+    container_name: mysql-test 
+    restart: no
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: test_db  
+    ports:
+      - "3308:3306" 
+    volumes:
+      - mysql_test_data:/var/lib/mysql  
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - multi-tenant-net
+
+  # Adminer
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql-a  
+    depends_on:
+      - mysql-a
+      - mysql-b
+      - mysql-test 
+    networks:
+      - multi-tenant-net
+
+volumes:
+  mysql_tenant_a_data:
+  mysql_tenant_b_data:
+  mysql_test_data:
+
+networks:
+  multi-tenant-net:
+    driver: bridge
