@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi'
 import { DatabaseValidationSchema } from './validation/database.validation'
 const envFilePath = `.env.${process.env.NODE_ENV || `development`}`
@@ -11,6 +11,8 @@ const envFilePath = `.env.${process.env.NODE_ENV || `development`}`
             NODE_ENV: Joi.string().valid('production', 'development', 'test').default('development'),
             ...DatabaseValidationSchema
         })
-    })]
+    })],
+    providers:[ConfigService],
+    exports:[ConfigService]
 })
 export class commonConfigModule {}
