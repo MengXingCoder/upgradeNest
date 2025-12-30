@@ -1,0 +1,4 @@
+export enum redisConfigEnum {
+    REDIS_DB_HOST = "REDIS_DB_HOST",
+    REDIS_DB_PORT = "REDIS_DB_PORT",
+ }
