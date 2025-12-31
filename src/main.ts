@@ -1,5 +1,5 @@
-import * as crypto from 'crypto';
-(global as any).crypto = crypto;
+// import * as crypto from 'crypto';
+// (global as any).crypto = crypto;
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AllExceptionFilter } from './common/filters/all-exception.filter';
@@ -15,6 +15,8 @@ async function bootstrap() {
         const httpAdapter = app.get(HttpAdapterHost)
         app.useGlobalFilters(new AllExceptionFilter(httpAdapter))
     }
+
+    console.log(' process.env.MONGODB_URI', process.env.MONGODB_URI)
     //全局请求前缀
     const prefix = configService.get(commonConfigEnum.PREFIX, '/api')
     console.log('前缀',prefix)

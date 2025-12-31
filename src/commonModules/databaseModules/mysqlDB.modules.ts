@@ -28,4 +28,4 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ],
     exports: [TypeOrmModule], // 导出该模块，供其他模块能使用 TypeORM 功能 (增删改查)
 })
-export class DatabaseModule { }
+export class mysqlDatabaseModule { }

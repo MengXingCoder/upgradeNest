@@ -1,5 +1,5 @@
 import * as Joi from 'joi'
-export const DatabaseValidationSchema = { 
+export const mysqlValidationSchema = { 
   DB_TYPE: Joi.string().valid('mysql').required(),
   DB_HOST: Joi.string().ip().required(),
   DB_PORT: Joi.number().port().default(3306),
