@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-
 import { RedisService } from './redis/redis.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './mongo/mongo.service';
@@ -17,7 +16,7 @@ export class AppController {
     async getHello() {
         return await this.userModel.find()
     }
-
+    
     //测试redis
     //   @Get()
     //   async getHello(@Query('token') token:string ) {

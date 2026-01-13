@@ -3,7 +3,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { databaseConfigEnum } from 'src/enum/database.enum';
 import { commonConfigModule } from 'src/config/commonConfig.module';  //导入配置模块
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
+import { User } from 'src/user/entities/user.entity';
 
 
 
@@ -21,7 +21,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
             password: configService.get<string>(databaseConfigEnum.DB_PASSWORD),
             database: configService.get<string>(databaseConfigEnum.DB_DATABASE),
             synchronize: configService.get<boolean>(databaseConfigEnum.DB_SYNC),
-            entities: [],
+            entities: [User],
 
         }),
     } as TypeOrmModuleOptions),
