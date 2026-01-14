@@ -12,20 +12,19 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+//   @Get()
+//   @Version('1')
+//   findAll1() {
+//       //也可以通过query参数带入的db名称来进行判断，但是很麻烦 可以抽离一个单独的数据库连接实例管理
+//     //   if (db === 'xxx') { }
+//       console.log('user ------------')
+//     return this.userService.findAllV1();
+//   }
   @Get()
-  @Version('1')
-  findAll1() {
-      //也可以通过query参数带入的db名称来进行判断，但是很麻烦 可以抽离一个单独的数据库连接实例管理
-    //   if (db === 'xxx') { }
-      console.log('user ------------')
-    return this.userService.findAllV1();
-  }
-  @Get()
-  @Version('2')
   findAll() {
       //请求时带入query参数 db="mysql-a"
-      console.log('user ------------mysql-a')
-    return this.userService.findAllV2();
+      console.log('user ------------mysql-a 租户a的数据库')
+    return this.userService.findAll();
   }
 
   @Get(':id')

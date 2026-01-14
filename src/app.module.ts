@@ -5,12 +5,13 @@ import { mysqlDatabaseModule } from './commonModules/databaseModules/mysqlDB.mod
 import { RedisService } from './redis/redis.service';
 import { mongoDatabaseModule } from './commonModules/databaseModules/mongoDB.modules ';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 
 
 
 @Module({
-  imports: [commonConfigModule, mysqlDatabaseModule,mongoDatabaseModule, UserModule],
+  imports: [commonConfigModule, mysqlDatabaseModule,mongoDatabaseModule, UserModule, AuthModule],
   controllers: [AppController],
   providers: [RedisService],
 })

@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 import { AllExceptionFilter } from './common/filters/all-exception.filter';
 import { ConfigService } from '@nestjs/config';
 import { commonConfigEnum } from './enum/common.config.enum';
-import { VersioningType } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const configService = app.get(ConfigService)
@@ -30,8 +30,11 @@ async function bootstrap() {
     app.enableVersioning({
         type:VersioningType.URI,
         defaultVersion:[version]
-    })
-
+    }) 
+    //全局管道
+    app.useGlobalPipes(new ValidationPipe({
+        whitelist:true,//在类上不存在的多余参数会被直接丢弃
+    }))
     await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

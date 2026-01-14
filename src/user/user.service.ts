@@ -1,4 +1,4 @@
-import { Injectable, Version } from '@nestjs/common';
+import { BadRequestException, Injectable, Version } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,21 +11,29 @@ import { UserRepository } from './entities/user.repository';
 export class UserService {
 
     constructor(
-        // @InjectRepository(User) private userRepo: Repository<User>,
-        // @InjectRepository(User, 'mysql-a') private userRepo1: Repository<User>,
-    private userRepoCommon:UserRepository) { }
-    create(createUserDto: CreateUserDto) {
-        return 'This action adds a new user';
-    }
-   
-    async findAllV1() {
-      
-        return await this.userRepoCommon.getRepository().find()
+        @InjectRepository(User) private userRepo: Repository<User>,
+        @InjectRepository(User, 'mysql-a') private userRepo1: Repository<User>,
+        private userRepoCommon: UserRepository) { }
+    async create(createUserDto) {
+        const { username, password } = createUserDto;
+
+        // 检查用户名是否已存在
+        const existingUser = await this.userRepo1.findOne({ where: { username } });
+        if (existingUser) {
+            throw new BadRequestException('Username already exists');
+        }
+        const newUser = this.userRepo1.create({
+            username,
+            password
+        });
+        const savedUser = await this.userRepo1.save(newUser);
+        return savedUser;
     }
 
-    async findAllV2() {
-    //   return 'This action adds a new user';  mysql-a
-        return await this.userRepoCommon.getRepository().find()
+    async findAll() {
+        //   return 'This action adds a new user';  mysql-a
+        // return await this.userRepoCommon.getRepository().find()
+        return await this.userRepo1.find()
     }
 
     findOne(id: number) {
