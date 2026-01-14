@@ -14,7 +14,7 @@ export class UserController {
 
   @Get()
   @Version('1')
-  findAll1(@Query('db') db:string) {
+  findAll1() {
       //也可以通过query参数带入的db名称来进行判断，但是很麻烦 可以抽离一个单独的数据库连接实例管理
     //   if (db === 'xxx') { }
       console.log('user ------------')
@@ -23,7 +23,8 @@ export class UserController {
   @Get()
   @Version('2')
   findAll() {
-      console.log('user ------------')
+      //请求时带入query参数 db="mysql-a"
+      console.log('user ------------mysql-a')
     return this.userService.findAllV2();
   }
 

@@ -5,24 +5,27 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { version } from 'os';
+import { UserRepository } from './entities/user.repository';
 
 @Injectable()
 export class UserService {
 
-    constructor(@InjectRepository(User) private userRepo: Repository<User>,
-    @InjectRepository(User,'mysql-a') private userRepo1: Repository<User>) { }
+    constructor(
+        // @InjectRepository(User) private userRepo: Repository<User>,
+        // @InjectRepository(User, 'mysql-a') private userRepo1: Repository<User>,
+    private userRepoCommon:UserRepository) { }
     create(createUserDto: CreateUserDto) {
         return 'This action adds a new user';
     }
    
     async findAllV1() {
-    //   return 'This action adds a new user';
-        return await this.userRepo.find()
+      
+        return await this.userRepoCommon.getRepository().find()
     }
 
     async findAllV2() {
-    //   return 'This action adds a new user';
-        return await this.userRepo1.find()
+    //   return 'This action adds a new user';  mysql-a
+        return await this.userRepoCommon.getRepository().find()
     }
 
     findOne(id: number) {
