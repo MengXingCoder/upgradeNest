@@ -22,12 +22,21 @@ export class UserService {
         if (existingUser) {
             throw new BadRequestException('Username already exists');
         }
-        const newUser = this.userRepo1.create({
+        
+        //1、先create 创建实体对象 2、再通过save把实体对象保存到数据库中
+        // const newUser = this.userRepo1.create({
+        //     username,
+        //     password
+        // });
+        // return await this.userRepo1.save(newUser);
+        
+
+        // 直接保存到数据库中
+        return await this.userRepo1.save({
             username,
             password
         });
-        const savedUser = await this.userRepo1.save(newUser);
-        return savedUser;
+       
     }
 
     async findAll() {
