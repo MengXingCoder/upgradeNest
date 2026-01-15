@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Version } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, Version } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,21 +22,21 @@ export class UserService {
         if (existingUser) {
             throw new BadRequestException('Username already exists');
         }
-        
+
         //1、先create 创建实体对象 2、再通过save把实体对象保存到数据库中
         // const newUser = this.userRepo1.create({
         //     username,
         //     password
         // });
         // return await this.userRepo1.save(newUser);
-        
+
 
         // 直接保存到数据库中
         return await this.userRepo1.save({
             username,
             password
         });
-       
+
     }
 
     async findAll() {
@@ -45,8 +45,20 @@ export class UserService {
         return await this.userRepo1.find()
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} user`;
+    async findOne(id: number) {
+        return ''
+    }
+
+    async findUser(username: string) {
+        const res = await this.userRepo1.findOne({
+            where: { username }
+        })
+        if (!res) {
+            throw new NotFoundException(`User "${username}" does not exist`);
+        }
+        console.log('userservice res', res)
+        return res
+
     }
 
     update(id: number, updateUserDto: UpdateUserDto) {

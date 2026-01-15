@@ -1,16 +1,18 @@
-import { Body, Controller, ParseArrayPipe, Post } from '@nestjs/common';
+import { Body, Controller, ParseArrayPipe, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { loginUserDto } from './dto/login-user.dto';
 import {registerUserDto} from './dto/register-user.dto'
 import { CreateUserPipe } from './pipes/create-user.pipe';
+import { AuthGuard } from '@nestjs/passport';
 @Controller('auth')
 export class AuthController {
-    constructor(private authService:AuthService) { }
+    constructor(private authService: AuthService) { }
+    @UseGuards(AuthGuard('jwt'))
     @Post('login')
     async login(@Body() loginUserDto:loginUserDto) { 
         const res = await this.authService.login(loginUserDto)
         console.log('登录res',res)
-        return res
+        return {access_token:res}
     }
 
     @Post('register')
