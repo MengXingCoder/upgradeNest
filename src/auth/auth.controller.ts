@@ -1,4 +1,4 @@
-import { Body, Controller, Get, ParseArrayPipe, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, ParseArrayPipe, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { loginUserDto } from './dto/login-user.dto';
 import { registerUserDto } from './dto/register-user.dto'
@@ -7,7 +7,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from 'src/common/guards/admin.guard';
 import { isPublic } from 'src/common/decorators/public.decorator';
 import { JwtGuard } from 'src/common/guards/jwt.guard';
+import { SerializeInterceptor } from 'src/common/interceptors/serialize.interceptor';
 @Controller('auth')
+@UseInterceptors(SerializeInterceptor)
 // @UseGuards(AdminGuard)
 // @UseGuards(JwtGuard)
 export class AuthController {
