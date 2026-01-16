@@ -1,13 +1,23 @@
-import { Body, Controller, ParseArrayPipe, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, ParseArrayPipe, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { loginUserDto } from './dto/login-user.dto';
 import {registerUserDto} from './dto/register-user.dto'
 import { CreateUserPipe } from './pipes/create-user.pipe';
 import { AuthGuard } from '@nestjs/passport';
+import { AdminGuard } from 'src/common/guards/admin.guard';
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) { }
+    // @UseGuards(AuthGuard('jwt'),AdminGuard)
+   
+    @UseGuards(AdminGuard)
     @UseGuards(AuthGuard('jwt'))
+        //多个装饰器时 执行时有顺序的 需要从下向上执行，就比如需要先执行(AuthGuard('jwt') 然后后面的AdminGuard才能获取到请求中的用户信息
+         // @UseGuards(AuthGuard('jwt'),AdminGuard) 也可以合并起来写 就是执行顺序就是 从前往后执行
+    @Get()
+    profile() {
+        return '访问profile'
+     }
     @Post('login')
     async login(@Body() loginUserDto:loginUserDto) { 
         const res = await this.authService.login(loginUserDto)
