@@ -7,19 +7,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post('cr')
   create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+    return this.userService.create1(createUserDto);
   }
 
-//   @Get()
-//   @Version('1')
-//   findAll1() {
-//       //也可以通过query参数带入的db名称来进行判断，但是很麻烦 可以抽离一个单独的数据库连接实例管理
-//     //   if (db === 'xxx') { }
-//       console.log('user ------------')
-//     return this.userService.findAllV1();
-//   }
+
   @Get()
   findAll() {
       //请求时带入query参数 db="mysql-a"
@@ -27,10 +20,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
-  }
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

@@ -25,21 +25,7 @@ import { User } from 'src/user/entities/user.entity';
 
         }),
     } as TypeOrmModuleOptions),
-        TypeOrmModule.forRootAsync({
-        name:"mysql-a",
-        inject: [ConfigService],
-        useFactory: (configService: ConfigService) => ({
-            type: configService.get<string>(databaseConfigEnum.DB_TYPE) || 'mysql',
-            host: configService.get<string>(databaseConfigEnum.DB_HOST),
-            port: 3306, //configService.get<number>(databaseConfigEnum.DB_PORT),
-            username: configService.get<string>(databaseConfigEnum.DB_USERNAME),
-            password: configService.get<string>(databaseConfigEnum.DB_PASSWORD),
-            database: configService.get<string>(databaseConfigEnum.DB_DATABASE),
-            synchronize: configService.get<boolean>(databaseConfigEnum.DB_SYNC),
-            entities: [User],
-
-        }),
-    } as TypeOrmModuleOptions),
+        
     ],
     exports: [TypeOrmModule], // 导出该模块，供其他模块能使用 TypeORM 功能 (增删改查)
 })

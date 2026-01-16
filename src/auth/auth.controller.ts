@@ -8,8 +8,8 @@ import { AdminGuard } from 'src/common/guards/admin.guard';
 import { isPublic } from 'src/common/decorators/public.decorator';
 import { JwtGuard } from 'src/common/guards/jwt.guard';
 @Controller('auth')
-@UseGuards(AdminGuard)
-@UseGuards(JwtGuard)
+// @UseGuards(AdminGuard)
+// @UseGuards(JwtGuard)
 export class AuthController {
     constructor(private authService: AuthService) { }
     // @UseGuards(AuthGuard('jwt'),AdminGuard)
@@ -19,7 +19,7 @@ export class AuthController {
     //多个装饰器时 执行时有顺序的 需要从下向上执行，就比如需要先执行(AuthGuard('jwt') 然后后面的AdminGuard才能获取到请求中的用户信息
     // @UseGuards(AuthGuard('jwt'),AdminGuard) 也可以合并起来写 就是执行顺序就是 从前往后执行
     @Get()
-    @isPublic()
+    // @isPublic()
     profile() {
         return '访问profile'
     }

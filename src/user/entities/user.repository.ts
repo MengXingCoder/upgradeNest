@@ -20,10 +20,7 @@ export class UserRepository {
         // console.log(this.request)
         const { query } = this.request
         const { db } = query
-        console.log('query', query.db)
-        if (db === 'mysql-a') { 
-            return this.userRepo1
-        }
-        return this.userRepo
+       
+        return this.userRepo1
     }
 }
