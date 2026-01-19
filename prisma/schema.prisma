@@ -1,0 +1,45 @@
+model User{
+    id Int @id @default(autoincrement())
+    username String @unique
+    password String 
+    @@map("users")
+}
+
+model Role{
+    id Int @id @default(autoincrement())
+    name String @unique
+    description String? 
+
+    users UserRole[]
+    @@map("roles")
+}
+model UserRole {
+    UserId Int
+    RoleId Int
+    Role Role  @relation(fields: [RoleId],references: [id])
+    User User  @relation(fields: [UserId],references: [id])
+     @@id([RoleId,UserId])
+     @@map("user_roles")
+}
+
+model permission {
+    id Int @id @default(autoincrement())
+    name String @unique
+    action String 
+    description String? 
+
+    RolePermissions RolePermissions[]
+    @@map("permissions")
+
+}
+model RolePermissions {
+    RoleId Int 
+    permissionId Int
+    role Role  @relation(fields: [RoleId],references: [id])
+    permission permission  @relation(fields: [permissionId],references: [id])
+
+   
+    @@id([RoleId,permissionId])
+    @@map("role_permissions")
+
+}

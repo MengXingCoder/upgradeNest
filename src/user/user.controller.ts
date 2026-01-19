@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Version, Query } fro
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Read } from 'src/common/decorators/role-permission.decorator';
 
 @Controller('user')
 export class UserController {
@@ -13,7 +14,8 @@ export class UserController {
   }
 
 
-  @Get()
+    @Get()
+      @Read()
   findAll() {
       //请求时带入query参数 db="mysql-a"
       console.log('user ------------mysql-a 租户a的数据库')

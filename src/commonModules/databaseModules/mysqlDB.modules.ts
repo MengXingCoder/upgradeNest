@@ -3,9 +3,11 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { databaseConfigEnum } from 'src/enum/database.enum';
 import { commonConfigModule } from 'src/config/commonConfig.module';  //导入配置模块
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from 'src/user/entities/user.entity';
-
-
+import { User } from 'src/entities/user-entity';
+import { Role } from 'src/entities/role-entity';
+import { UserRole } from 'src/entities/user-role.entity';
+import {Permission} from 'src/entities/permission-entity'
+import { RolePermission } from 'src/entities/role-permission.entity';
 
 @Module({
     imports: [ConfigModule.forRoot({ isGlobal: true }),
@@ -21,7 +23,7 @@ import { User } from 'src/user/entities/user.entity';
             password: configService.get<string>(databaseConfigEnum.DB_PASSWORD),
             database: configService.get<string>(databaseConfigEnum.DB_DATABASE),
             synchronize: configService.get<boolean>(databaseConfigEnum.DB_SYNC),
-            entities: [User],
+            entities: [User,Role,UserRole,Permission,RolePermission],
 
         }),
     } as TypeOrmModuleOptions),
