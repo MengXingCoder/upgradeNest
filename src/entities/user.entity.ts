@@ -1,6 +1,6 @@
 // src/entities/user.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { UserRole } from './user-role.entity'; // 引入中间表实体
+import { UserRole } from './user.role.entity'; // 引入中间表实体
 
 /**
  * 用户实体

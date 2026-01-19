@@ -3,11 +3,11 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { databaseConfigEnum } from 'src/enum/database.enum';
 import { commonConfigModule } from 'src/config/commonConfig.module';  //导入配置模块
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from 'src/entities/user-entity';
-import { Role } from 'src/entities/role-entity';
-import { UserRole } from 'src/entities/user-role.entity';
-import {Permission} from 'src/entities/permission-entity'
-import { RolePermission } from 'src/entities/role-permission.entity';
+import { User } from 'src/entities/user.entity';
+import { Role } from 'src/entities/role.entity';
+import { UserRole } from 'src/entities/user.role.entity';
+import {Permission} from 'src/entities/permission.entity'
+import { RolePermission } from 'src/entities/role.permission.entity';
 
 @Module({
     imports: [ConfigModule.forRoot({ isGlobal: true }),
@@ -16,6 +16,7 @@ import { RolePermission } from 'src/entities/role-permission.entity';
     TypeOrmModule.forRootAsync({
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => ({
+            
             type: configService.get<string>(databaseConfigEnum.DB_TYPE) || 'mysql',
             host: configService.get<string>(databaseConfigEnum.DB_HOST),
             port: configService.get<number>(databaseConfigEnum.DB_PORT),

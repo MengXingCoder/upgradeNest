@@ -1,7 +1,7 @@
 // src/entities/role.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { UserRole } from './user-role.entity';
-import { RolePermission } from './role-permission.entity'; // 注意：Prisma 中叫 RolePermissions，但 TS 类名建议单数
+import { UserRole } from './user.role.entity';
+import { RolePermission } from './role.permission.entity'; // 注意：Prisma 中叫 RolePermissions，但 TS 类名建议单数
 
 /**
  * 角色实体

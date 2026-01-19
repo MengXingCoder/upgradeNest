@@ -1,7 +1,7 @@
 // src/entities/role-permission.entity.ts
 import { Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Role } from './role-entity';
-import { Permission } from './permission-entity';
+import { Role } from './role.entity';
+import { Permission } from './permission.entity';
 
 /**
  * 角色-权限关联实体（显式中间表）

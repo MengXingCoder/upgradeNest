@@ -1,6 +1,6 @@
 // src/entities/permission.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { RolePermission } from './role-permission.entity';
+import { RolePermission } from './role.permission.entity';
 
 /**
  * 权限实体

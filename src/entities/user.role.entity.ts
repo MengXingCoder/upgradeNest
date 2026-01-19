@@ -1,7 +1,7 @@
 // src/entities/user-role.entity.ts
 import { Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from './user-entity';
-import { Role } from './role-entity';
+import { User } from './user.entity';
+import { Role } from './role.entity';
 
 /**
  * 用户-角色关联实体（显式中间表）
