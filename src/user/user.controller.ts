@@ -1,25 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Version, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Version, Query, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Read } from 'src/common/decorators/role-permission.decorator';
+import { Delete, Permission, Read} from 'src/common/decorators/role-permission.decorator';
 import { RolePermissionGuard } from 'src/common/guards/role-permission.guard';
+import { Action } from 'src/enum/actions.enum';
 
 @Controller('user')
-// @UseGuards(RolePermissionGuard)
+    @UseGuards(RolePermissionGuard)
+@Permission('user')
+    @Permission('user1')
+
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
     @Post('cr')
-// @Read()
-//     @Delete()
+
     create(@Body() createUserDto: CreateUserDto) {
         return this.userService.create1(createUserDto);
     }
-
-
-    @Get()
     
+    
+  
+    @Post('test')
+    // @Permission(Action.Read,Action.Delete)
+    @Read()
+        @Delete()
+       
+    test() { 
+        return 'test ok'
+    }
+    
+    @Get()
+     
     findAll() {
         //请求时带入query参数 db="mysql-a"
         console.log('user ------------mysql-a 租户a的数据库')
@@ -33,8 +46,5 @@ export class UserController {
         return this.userService.update(+id, updateUserDto);
     }
 
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.userService.remove(+id);
-    }
+    
 }
