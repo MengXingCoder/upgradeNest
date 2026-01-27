@@ -7,12 +7,13 @@ import { mongoDatabaseModule } from './commonModules/databaseModules/mongoDB.mod
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
+import { PermissionModule } from './permission/permission.module';
 
 
 
 
 @Module({
-  imports: [commonConfigModule, mysqlDatabaseModule,mongoDatabaseModule, UserModule, AuthModule, RoleModule],
+  imports: [commonConfigModule, mysqlDatabaseModule,mongoDatabaseModule, UserModule, AuthModule, RoleModule, PermissionModule],
   controllers: [AppController],
   providers: [RedisService],
 })
