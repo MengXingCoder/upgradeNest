@@ -1,10 +1,10 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator'
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator'
 import { Transform } from 'class-transformer'
 
 export class registerUserDto {
     @IsString()
     @IsNotEmpty()
-    @Length(6, 20, {
+    @Length(4, 20, {
         message: '用户名至少6位'
     })
     username: string;
@@ -16,5 +16,5 @@ export class registerUserDto {
     })
     password: string;
 
-    
+
 }

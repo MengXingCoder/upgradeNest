@@ -22,7 +22,7 @@ export class AuthService {
     }
     register(registerUserDto) { 
         try {
-            return this.userService.create1(registerUserDto)
+            return this.userService.create(registerUserDto)
         } catch (error) {
              console.error('注册失败:', error); // 👈 看这里！打印真实错误
     throw new BadRequestException('注册失败，请检查输入');
