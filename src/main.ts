@@ -21,7 +21,7 @@ async function bootstrap() {
     const prefix = configService.get(commonConfigEnum.PREFIX, '/api')
     console.log('前缀',prefix)
     app.setGlobalPrefix(prefix)
-    
+
     //跨域请求
     const cors = configService.get(commonConfigEnum.CORS,false)
     app.enableCors(cors)
@@ -30,11 +30,12 @@ async function bootstrap() {
     app.enableVersioning({
         type:VersioningType.URI,
         defaultVersion:[version]
-    }) 
+    })
     //全局管道
     app.useGlobalPipes(new ValidationPipe({
         whitelist:true,//在类上不存在的多余参数会被直接丢弃
     }))
-    await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3000);
+  
 }
 bootstrap();
