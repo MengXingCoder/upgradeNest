@@ -24,7 +24,7 @@ export class UserService {
   ) {}
   async create(createUserDto: CreateUserDto) {
     const { username, password, roleIds = [] } = createUserDto;
-
+    console.log('传入的createUserDto', createUserDto);
     // 1. 验证角色（不涉及数据库写入，可提前做）
 
     // 先看创建用户时传过来的 roleIds是否为空数组 如果为空数组 那么就是吧默认的1传进去 代表普通用户
@@ -33,18 +33,25 @@ export class UserService {
     // 如果在role的表中 那么赋值给finalRoleIds  后续随创建用户时一并进行关联
     let finalRoleIds = [1]; // 默认
     if (roleIds.length > 0) {
+      //找出role标准所有角色的id
       const existingRoles = await this.roleRepository.find({
-        where: { id: In(roleIds) },
+        where: { id: In(roleIds) }, //就是找出role表中所有的id 看看是否在roleids里面
         select: ['id'],
       });
+      //去重
       const existingIds = new Set(existingRoles.map(r => r.id));
+
+      //如果传入的id不在表中查出的id 那就是不存在
       const invalid = roleIds.filter(id => !existingIds.has(id));
-      if (invalid.length)
+      if (invalid.length) {
         throw new BadRequestException(`角色不存在:  $ {invalid.join(', ')}`);
+      }
+
       finalRoleIds = [...existingIds];
+      console.log('finalRoleIds', finalRoleIds);
     }
 
-    // 2. 确保默认角色存在（如果用到了）
+    // // 2. 确保默认角色存在
     if (finalRoleIds.includes(1)) {
       const exists = await this.roleRepository.exist({ where: { id: 1 } });
       if (!exists) throw new Error('默认角色 ID=1 未初始化');

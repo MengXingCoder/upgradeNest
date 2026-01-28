@@ -7,9 +7,9 @@ import { RolePermissionGuard } from 'src/common/guards/role-permission.guard';
 import { Action } from 'src/enum/actions.enum';
 
 @Controller('user')
-@UseGuards(RolePermissionGuard)
-@Permission('user')
-@Permission('user1')
+// @UseGuards(RolePermissionGuard)
+// @Permission('user')
+// @Permission('user1')
 
 export class UserController {
     constructor(private readonly userService: UserService) { }
@@ -24,8 +24,8 @@ export class UserController {
 
     @Post('test')
     // @Permission(Action.Read,Action.Delete)
-    @Read()
-    @Delete()
+    // @Read()
+    // @Delete()
 
     test() {
         return 'test ok'
